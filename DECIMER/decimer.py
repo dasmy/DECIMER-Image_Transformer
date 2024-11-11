@@ -59,7 +59,13 @@ def get_models(model_urls: dict):
     tokenizer_path = os.path.join(
         model_paths["DECIMER"], "assets", "tokenizer_SMILES.pkl"
     )
-    tokenizer = pickle.load(open(tokenizer_path, "rb"))
+    try:
+        tokenizer = pickle.load(open(tokenizer_path, "rb"))
+    except ImportError:
+        import tensorflow.keras.preprocessing.text
+
+        sys.modules["keras.preprocessing.text"] = tensorflow.keras.preprocessing.text
+        tokenizer = pickle.load(open(tokenizer_path, "rb"))
 
     # Load DECIMER models
     DECIMER_V2 = tf.saved_model.load(model_paths["DECIMER"])
@@ -123,7 +129,7 @@ def detokenize_output_add_confidence(
 
 
 def predict_SMILES(
-        image_input: [str, np.ndarray], confidence: bool = False, hand_drawn: bool = False
+    image_input: [str, np.ndarray], confidence: bool = False, hand_drawn: bool = False
 ) -> str:
     """Predicts SMILES representation of a molecule depicted in the given image.
 

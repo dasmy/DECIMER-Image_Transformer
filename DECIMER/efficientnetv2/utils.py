@@ -13,6 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 """Model utilities."""
+
 import contextlib
 import functools
 import os
@@ -598,7 +599,7 @@ def restore_tf2_ckpt(model, ckpt_path_or_file, skip_mismatch=True, exclude_layer
                 raise KeyError(msg)
 
 
-class ReuableBackupAndRestore(tf.keras.callbacks.experimental.BackupAndRestore):
+class ReuableBackupAndRestore(tf.keras.callbacks.BackupAndRestore):
     """A BackupAndRestore callback that can be used across multiple
     model.fit()s."""
 

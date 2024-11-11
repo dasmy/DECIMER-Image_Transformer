@@ -6,9 +6,9 @@ import setuptools
 if (
     platform.processor() == "arm" or platform.processor() == "i386"
 ) and platform.system() == "Darwin":
-    tensorflow_os = "tensorflow-macos>=2.10.0,<=2.15.0"
+    tensorflow_os = ["tensorflow-macos>=2.10.0"]
 else:
-    tensorflow_os = "tensorflow>=2.12.0,<=2.15.0"
+    tensorflow_os = ["tensorflow>=2.12.0"]
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -29,7 +29,8 @@ setuptools.setup(
     url="https://github.com/Kohulan/DECIMER-Image_Transformer",
     packages=setuptools.find_packages(),
     license="MIT",
-    install_requires=[
+    install_requires=tensorflow_os
+    + [
         tensorflow_os,
         "opencv-python",
         "pystow",
