@@ -32,6 +32,7 @@ setuptools.setup(
     install_requires=tensorflow_os
     + [
         tensorflow_os,
+        "tf-keras~=2.16",
         "opencv-python",
         "pystow",
         "pillow-heif",

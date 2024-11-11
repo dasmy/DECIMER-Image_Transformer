@@ -19,6 +19,11 @@ For comments, bug reports or feature ideas,
 please raise a issue on the Github repository.
 """
 
+import os
+
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
+del os
+
 __version__ = "2.6.0"
 
 __all__ = [
