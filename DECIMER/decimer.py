@@ -4,9 +4,11 @@ import pickle
 import sys
 from typing import List
 from typing import Tuple
+from typing import Union
 
 import numpy as np
 import pystow
+from PIL import Image
 import tensorflow as tf
 
 import DECIMER.config as config
@@ -129,7 +131,9 @@ def detokenize_output_add_confidence(
 
 
 def predict_SMILES(
-    image_input: [str, np.ndarray], confidence: bool = False, hand_drawn: bool = False
+    image_input: Union[str, np.ndarray, Image.Image],
+    confidence: bool = False,
+    hand_drawn: bool = False,
 ) -> str:
     """Predicts SMILES representation of a molecule depicted in the given image.
 

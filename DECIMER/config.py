@@ -96,7 +96,7 @@ def HEIF_to_pillow(image_path: str):
     return heif_file
 
 
-def remove_transparent(image: Union[str, np.ndarray]) -> Image.Image:
+def remove_transparent(image: Union[str, np.ndarray, Image.Image]) -> Image.Image:
     """
     Removes the transparent layer from a PNG image with an alpha channel.
 
@@ -106,6 +106,7 @@ def remove_transparent(image: Union[str, np.ndarray]) -> Image.Image:
     Returns:
         PIL.Image.Image: The image with transparency removed.
     """
+
     def process_image(png: Image.Image) -> Image.Image:
         """
         Helper function to remove transparency from a single image.
@@ -152,6 +153,12 @@ def remove_transparent(image: Union[str, np.ndarray]) -> Image.Image:
         """
         png = Image.fromarray(array).convert("RGBA")
         return process_image(png)
+
+    if isinstance(image, Image.Image):
+        if image.mode == "RGB":
+            return image
+        else:
+            return process_image(image)
 
     # Check if input is a numpy array
     if isinstance(image, np.ndarray):
@@ -228,7 +235,7 @@ def increase_brightness(image):
     return image
 
 
-def decode_image(image_path: Union[str, np.ndarray]):
+def decode_image(image_path: Union[str, np.ndarray, Image.Image]):
     """Loads an image and preprocesses the input image in several steps to get
     the image ready for DECIMER input.
 
