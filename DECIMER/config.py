@@ -253,7 +253,8 @@ def decode_image(image_path: Union[str, np.ndarray, Image.Image]):
     img = central_square_image(img)
     img = increase_brightness(img)
     img = PIL_im_to_BytesIO(img)
-    img = tf.image.decode_png(img.getvalue(), channels=3)
+    img = tf.convert_to_tensor(img.getvalue())
+    img = tf.image.decode_png(img, channels=3)
     img = tf.image.resize(img, (512, 512), method="gaussian", antialias=True)
     img = efn.preprocess_input(img)
     return img
